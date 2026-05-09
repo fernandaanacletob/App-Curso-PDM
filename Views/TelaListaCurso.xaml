@@ -1,12 +1,43 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="appProvaA1Curso.Views.TelaListaCurso"
-             Title="TelaListaCurso">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+x:Class="appProvaA1Curso.Views.TelaListaCurso"
+BackgroundImageSource="fundo.png"
+Title="Lista dos Cursos">
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Incluir" IconImageSource="incluircurso.png" Clicked="irTelaIncluirCurso" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout>
+            
+            <SearchBar x:Name="txtBusca" Margin="-10, 0, 0, 0" Placeholder="Digite o Curso..." TextChanged="txtBuscar" />
+            
+            <ListView x:Name="lstCurso" IsPullToRefreshEnabled="True" Refreshing="refCarregando" ItemSelected="lstCursoItemSelected">
+                
+                <ListView.Header>
+                    <Grid RowDefinitions="Auto" ColumnDefinitions="*, *, *">
+                        <Label Grid.Row="0" Grid.Column="0" Text="Código(ID)" HorizontalTextAlignment="Center" FontAttributes="Bold" />
+                        <Label Grid.Row="0" Grid.Column="1" Text="Nome" HorizontalTextAlignment="Center" FontAttributes="Bold" />
+                        <Label Grid.Row="0" Grid.Column="2" Text="Endereço" HorizontalTextAlignment="Center" FontAttributes="Bold" />
+                    </Grid>
+                </ListView.Header>
+                
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.ContextActions>
+                                <MenuItem Text="Excluir Curso" IconImageSource="excluircurso.png" Clicked="excluirCurso" />
+                            </ViewCell.ContextActions>
+                            <Grid RowDefinitions="Auto" ColumnDefinitions="*, *, *">
+                                <Label Grid.Row="0" Grid.Column="0" Text="{Binding idCurso}" HorizontalTextAlignment="Center" FontAttributes="Bold" />
+                                <Label Grid.Row="0" Grid.Column="1" Text="{Binding nomeCurso}" HorizontalTextAlignment="Center" FontAttributes="Bold" />
+                                <Label Grid.Row="0" Grid.Column="2" Text="{Binding enderecoCurso}" HorizontalTextAlignment="Center" FontAttributes="Bold" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
 </ContentPage>
