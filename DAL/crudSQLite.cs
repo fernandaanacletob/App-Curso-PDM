@@ -2,7 +2,7 @@
 
 using SQLite;
 
-namespace appClasseCursoBD.DAL { 
+namespace appProvaA1Curso.DAL { 
     public class crudSQLite
     {
         readonly SQLiteAsyncConnection _conexao;

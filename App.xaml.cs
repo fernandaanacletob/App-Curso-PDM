@@ -1,5 +1,4 @@
-﻿using appClasseCursoBD.DAL;
-using appProvaA1Curso.DAL;
+﻿using appProvaA1Curso.DAL;
 using appProvaA1Curso.Views;
 
 namespace appProvaA1Curso
