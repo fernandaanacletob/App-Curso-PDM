@@ -1,43 +1,83 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-x:Class="appProvaA1Curso.Views.TelaListaCurso"
-BackgroundImageSource="fundo.png"
-Title="Lista dos Cursos">
-    
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Incluir" IconImageSource="incluircurso.png" Clicked="irTelaIncluirCurso" />
-    </ContentPage.ToolbarItems>
-    <ContentPage.Content>
-        <StackLayout>
-            
-            <SearchBar x:Name="txtBusca" Margin="-10, 0, 0, 0" Placeholder="Digite o Curso..." TextChanged="txtBuscar" />
-            
-            <ListView x:Name="lstCurso" IsPullToRefreshEnabled="True" Refreshing="refCarregando" ItemSelected="lstCursoItemSelected">
-                
-                <ListView.Header>
-                    <Grid RowDefinitions="Auto" ColumnDefinitions="*, *, *">
-                        <Label Grid.Row="0" Grid.Column="0" Text="Código(ID)" HorizontalTextAlignment="Center" FontAttributes="Bold" />
-                        <Label Grid.Row="0" Grid.Column="1" Text="Nome" HorizontalTextAlignment="Center" FontAttributes="Bold" />
-                        <Label Grid.Row="0" Grid.Column="2" Text="Endereço" HorizontalTextAlignment="Center" FontAttributes="Bold" />
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="appProvaA1Curso.Views.TelaListaCurso"
+             Title="Cursos"
+             BackgroundColor="#F5F5F5">
+
+    <Grid RowDefinitions="Auto,*" Padding="10">
+        <!-- Botão Adicionar -->
+        <Button x:Name="btnAdicionar"
+                Text="➕ Adicionar Curso"
+                BackgroundColor="#4CAF50"
+                TextColor="White"
+                FontAttributes="Bold"
+                CornerRadius="10"
+                HeightRequest="50"
+                Margin="0,10,0,10"
+                Clicked="btnAdicionar_Clicked"/>
+
+        <!-- Lista de Cursos -->
+        <CollectionView x:Name="listaCursos"
+                        Grid.Row="1"
+                        SelectionMode="Single"
+                        SelectionChanged="OnCursoSelecionado">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="10"
+                          Margin="0,5"
+                          BackgroundColor="White"
+                          RowDefinitions="Auto,Auto"
+                          ColumnDefinitions="*,Auto">
+
+                        <!-- Nome do Curso -->
+                        <Label Text="{Binding Nome}"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="#333333"
+                               Grid.Column="0"
+                               Grid.Row="0"/>
+
+                        <!-- Carga Horária -->
+                        <Label Text="{Binding CargaHoraria, StringFormat='⏱️ {0}h'}"
+                               FontSize="14"
+                               TextColor="#666666"
+                               Grid.Column="0"
+                               Grid.Row="1"/>
+
+                        <!-- Ícones de Ação -->
+                        <StackLayout Orientation="Horizontal"
+                                     Grid.Column="1"
+                                     Grid.RowSpan="2"
+                                     Spacing="15">
+
+                            <Button Text="✏️"
+                                    BackgroundColor="#2196F3"
+                                    TextColor="White"
+                                    CornerRadius="5"
+                                    WidthRequest="40"
+                                    HeightRequest="40"
+                                    Clicked="OnEditar"
+                                    CommandParameter="{Binding .}"/>
+
+                            <Button Text="🗑️"
+                                    BackgroundColor="#F44336"
+                                    TextColor="White"
+                                    CornerRadius="5"
+                                    WidthRequest="40"
+                                    HeightRequest="40"
+                                    Clicked="OnExcluir"
+                                    CommandParameter="{Binding .}"/>
+                        </StackLayout>
+
+                        <!-- Linha separadora -->
+                        <BoxView HeightRequest="1"
+                                 BackgroundColor="#E0E0E0"
+                                 Grid.Row="2"
+                                 Grid.ColumnSpan="2"/>
                     </Grid>
-                </ListView.Header>
-                
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <ViewCell.ContextActions>
-                                <MenuItem Text="Excluir Curso" IconImageSource="excluircurso.png" Clicked="excluirCurso" />
-                            </ViewCell.ContextActions>
-                            <Grid RowDefinitions="Auto" ColumnDefinitions="*, *, *">
-                                <Label Grid.Row="0" Grid.Column="0" Text="{Binding idCurso}" HorizontalTextAlignment="Center" FontAttributes="Bold" />
-                                <Label Grid.Row="0" Grid.Column="1" Text="{Binding nomeCurso}" HorizontalTextAlignment="Center" FontAttributes="Bold" />
-                                <Label Grid.Row="0" Grid.Column="2" Text="{Binding enderecoCurso}" HorizontalTextAlignment="Center" FontAttributes="Bold" />
-                            </Grid>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackLayout>
-    </ContentPage.Content>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
 </ContentPage>

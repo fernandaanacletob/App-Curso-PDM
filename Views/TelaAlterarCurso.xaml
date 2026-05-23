@@ -1,12 +1,57 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="appProvaA1Curso.Views.TelaAlterarCurso"
-             Title="TelaAlterarCurso">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="appProvaA1Curso.Views.TelaAlterarCurso"
+    Title="Alterar Curso">
+
+    <Grid>
+
+        <Image Source="fundocurso.png"
+               Aspect="AspectFill"/>
+
+        <ScrollView>
+
+            <Frame BackgroundColor="#FFFFFFDD"
+                   Margin="20"
+                   CornerRadius="25"
+                   Padding="25">
+
+                <StackLayout Spacing="20">
+
+                    <Label Text="Editar Curso"
+                           FontSize="30"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"/>
+
+                    <Entry Placeholder="Nome do Curso"
+                           Text="{Binding NomeCurso}"
+                           BackgroundColor="White"/>
+
+                    <Entry Placeholder="Carga Horária"
+                           Text="{Binding CargaHoraria}"
+                           Keyboard="Numeric"
+                           BackgroundColor="White"/>
+
+                    <Button Text="Salvar Alterações"
+                            ImageSource="salvarcurso.png"
+                            BackgroundColor="#1E90FF"
+                            TextColor="White"
+                            HeightRequest="55"
+                            CornerRadius="20"/>
+
+                    <Button Text="Excluir Curso"
+                            ImageSource="excluircurso.png"
+                            BackgroundColor="#DC143C"
+                            TextColor="White"
+                            HeightRequest="55"
+                            CornerRadius="20"/>
+
+                </StackLayout>
+
+            </Frame>
+
+        </ScrollView>
+
+    </Grid>
+
 </ContentPage>
