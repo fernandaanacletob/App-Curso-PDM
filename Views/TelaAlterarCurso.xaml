@@ -1,57 +1,79 @@
-<ContentPage
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    x:Class="appProvaA1Curso.Views.TelaAlterarCurso"
-    Title="Alterar Curso">
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="appProvaA1Curso.Views.TelaAlterarCurso"
+             Title="Alterar Curso"
+             BackgroundColor="#F8F9FA">
 
-    <Grid>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Salvar" 
+                     IconImageSource="save_icon.png"
+                     Clicked="ToolbarItemClickedSalvar" />
+    </ContentPage.ToolbarItems>
 
-        <Image Source="fundocurso.png"
-               Aspect="AspectFill"/>
+    <ContentPage.Content>
+        <StackLayout Padding="16" Spacing="16">
 
-        <ScrollView>
+            <Label Text="Edite as informações do curso"
+                   FontSize="14"
+                   TextColor="#6C757D"
+                   HorizontalOptions="Center"
+                   Margin="0,20,0,0"/>
 
-            <Frame BackgroundColor="#FFFFFFDD"
-                   Margin="20"
-                   CornerRadius="25"
-                   Padding="25">
+            <!-- Card do formulário -->
+            <Frame BackgroundColor="#FFFFFF"
+                   CornerRadius="12"
+                   Padding="20"
+                   HasShadow="True">
 
                 <StackLayout Spacing="20">
 
-                    <Label Text="Editar Curso"
-                           FontSize="30"
-                           FontAttributes="Bold"
-                           HorizontalOptions="Center"/>
+                    <!-- ID (somente leitura) -->
+                    <Border Stroke="#DEE2E6" 
+                            Padding="10,5" 
+                            Margin="4"
+                            StrokeShape="RoundRectangle 8,0">
+                        <Entry Placeholder="Código:" 
+                               x:Name="txtId"
+                               FontAttributes="Bold" 
+                               Margin="4"
+                               IsEnabled="False"
+                               BackgroundColor="#F8F9FA"
+                               TextColor="#6C757D" />
+                    </Border>
 
-                    <Entry Placeholder="Nome do Curso"
-                           Text="{Binding NomeCurso}"
-                           BackgroundColor="White"/>
+                    <!-- Campo Nome -->
+                    <Border Stroke="#DEE2E6" 
+                            Padding="10,5" 
+                            Margin="4"
+                            StrokeShape="RoundRectangle 8,0">
+                        <Entry Placeholder="Nome do Curso:" 
+                               x:Name="txtNomeCurso"
+                               FontAttributes="Bold" 
+                               Margin="4"
+                               Text="{Binding Nome}"
+                               TextColor="#212529"
+                               PlaceholderColor="#6C757D"
+                               ClearButtonVisibility="WhileEditing" />
+                    </Border>
 
-                    <Entry Placeholder="Carga Horária"
-                           Text="{Binding CargaHoraria}"
-                           Keyboard="Numeric"
-                           BackgroundColor="White"/>
-
-                    <Button Text="Salvar Alterações"
-                            ImageSource="salvarcurso.png"
-                            BackgroundColor="#1E90FF"
-                            TextColor="White"
-                            HeightRequest="55"
-                            CornerRadius="20"/>
-
-                    <Button Text="Excluir Curso"
-                            ImageSource="excluircurso.png"
-                            BackgroundColor="#DC143C"
-                            TextColor="White"
-                            HeightRequest="55"
-                            CornerRadius="20"/>
-
+                    <!-- Campo Carga Horária -->
+                    <Border Stroke="#DEE2E6" 
+                            Padding="10,5" 
+                            Margin="4"
+                            StrokeShape="RoundRectangle 8,0">
+                        <Entry Placeholder="Carga Horária (horas):" 
+                               x:Name="txtCargaHoraria"
+                               FontAttributes="Bold" 
+                               Margin="4" 
+                               Keyboard="Numeric"
+                               Text="{Binding CargaHoraria}"
+                               TextColor="#212529"
+                               PlaceholderColor="#6C757D"
+                               ClearButtonVisibility="WhileEditing" />
+                    </Border>
                 </StackLayout>
-
             </Frame>
-
-        </ScrollView>
-
-    </Grid>
-
+        </StackLayout>
+    </ContentPage.Content>
 </ContentPage>

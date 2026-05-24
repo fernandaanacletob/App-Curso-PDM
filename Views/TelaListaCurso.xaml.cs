@@ -1,24 +1,27 @@
-using appProvaA1Curso;
 using appProvaA1Curso.Model;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace appProvaA1Curso.Views;
 
 public partial class TelaListaCurso : ContentPage
 {
     ObservableCollection<Curso> listagemCursos = new ObservableCollection<Curso>();
+    
+    int _searchToken = 0;
+
     public TelaListaCurso()
     {
         InitializeComponent();
-
-        lstCurso.ItemsSource = listagemCursos;
+        lstCursos.ItemsSource = listagemCursos;
     }
 
+    // Tratamento do evento de clique no ToolBarItem
     private async void irTelaIncluirCurso(object sender, EventArgs e)
     {
         try
         {
-            Navigation.PushAsync(new TelaIncluirCurso());
+            await Navigation.PushAsync(new TelaIncluirCurso());
         }
         catch (Exception ex)
         {
@@ -26,13 +29,18 @@ public partial class TelaListaCurso : ContentPage
         }
     }
 
-    protected async override void OnAppearing()
+    // Método executado quando a página é exibida
+    protected override async void OnAppearing()
     {
+        base.OnAppearing();
         try
         {
             listagemCursos.Clear();
-            List<Curso> temp = await App.Database.GetAll();
-            temp.ForEach(i => listagemCursos.Add(i));
+            List<Curso> temp = await App.Database.GetAllCursos();
+            foreach (var curso in temp)
+            {
+                listagemCursos.Add(curso);
+            }
         }
         catch (Exception ex)
         {
@@ -40,36 +48,61 @@ public partial class TelaListaCurso : ContentPage
         }
     }
 
+    // Trata o evento Invoked do SwipeItem (EXCLUIR)
     private async void excluirCurso(object sender, EventArgs e)
     {
         try
         {
-            MenuItem itemSelecionado = sender as MenuItem;
+            var swipeItem = sender as SwipeItem;
+            Curso cursoSelecionado = swipeItem?.BindingContext as Curso;
 
-            Curso cursoSelecionado = itemSelecionado.BindingContext as Curso;
+            if (cursoSelecionado == null) return;
 
-            bool confirmacao = await DisplayAlert("Tem Certeza que quer excluir o Curso?", $"Excluir {cursoSelecionado.nomeCurso}", "Sim", "Não");
+            bool confirmacao = await DisplayAlert("Tem Certeza que quer excluir o Curso?",
+                $"Excluir {cursoSelecionado.Nome}", "Sim", "Não");
+
             if (confirmacao)
             {
-                await App.Database.Delete(cursoSelecionado.idCurso);
+                await App.Database.DeleteCurso(cursoSelecionado.Id);
+                listagemCursos.Remove(cursoSelecionado);
+                await DisplayAlert("Sucesso", "Curso excluído com sucesso!", "OK");
             }
-            listagemCursos.Remove(cursoSelecionado);
         }
         catch (Exception ex)
         {
-        await DisplayAlert("Erro na Exclusão do Curso !!!!", ex.Message, "OK");
+            await DisplayAlert("Erro na Exclusão do Curso !!!!", ex.Message, "OK");
         }
     }
+
+    // Trata o evento TextChanged da SearchBar (PESQUISAR)
     private async void txtBuscar(object sender, TextChangedEventArgs e)
     {
+        // Capture token to ensure only latest search updates the collection
+        int token = System.Threading.Interlocked.Increment(ref _searchToken);
+        string busca = e.NewTextValue?.Trim();
         try
         {
-            string busca = e.NewTextValue;
-            lstCurso.IsRefreshing = true;
-           
+            refreshView.IsRefreshing = true;
+
             listagemCursos.Clear();
-            List<Curso> temp = await App.Database.Search(busca);
-            temp.ForEach(i => listagemCursos.Add(i));
+
+            List<Curso> temp;
+            if (string.IsNullOrWhiteSpace(busca))
+            {
+                temp = await App.Database.GetAllCursos();
+            }
+            else
+            {
+                temp = await App.Database.SearchCursos(busca);
+            }
+
+            // If another search started after this one, ignore these results
+            if (token != _searchToken) return;
+
+            foreach (var curso in temp)
+            {
+                listagemCursos.Add(curso);
+            }
         }
         catch (Exception ex)
         {
@@ -77,20 +110,23 @@ public partial class TelaListaCurso : ContentPage
         }
         finally
         {
-            lstCurso.IsRefreshing = false;
+            // Only clear refreshing if this is the latest search
+            if (token == _searchToken)
+                refreshView.IsRefreshing = false;
         }
     }
-    /*
-    * Trata o evento ItemSelected da ListView navegando para a página de detalhes.
-    */
-    private void lstCursoItemSelected(object sender, SelectedItemChangedEventArgs e)
+
+    // Trata o evento SelectionChanged da CollectionView navegando para a página de detalhes (ALTERAR)
+    private void lstCursosItemSelected(object sender, SelectionChangedEventArgs e)
     {
         try
         {
-            Curso curso1 = e.SelectedItem as Curso;
+            Curso cursoSelecionado = e.CurrentSelection?.FirstOrDefault() as Curso;
+            if (cursoSelecionado == null) return;
+
             Navigation.PushAsync(new TelaAlterarCurso
             {
-                BindingContext = curso1,
+                BindingContext = cursoSelecionado,
             });
         }
         catch (Exception ex)
@@ -98,13 +134,18 @@ public partial class TelaListaCurso : ContentPage
             DisplayAlert("Erro Desconhecido na Seleção de Curso !!!!", ex.Message, "OK");
         }
     }
+
+    // Refresh da lista (Pull To Refresh)
     private async void refCarregando(object sender, EventArgs e)
     {
         try
         {
             listagemCursos.Clear();
-            List<Curso> temp = await App.Database.GetAll();
-            temp.ForEach(i => listagemCursos.Add(i));
+            List<Curso> temp = await App.Database.GetAllCursos();
+            foreach (var curso in temp)
+            {
+                listagemCursos.Add(curso);
+            }
         }
         catch (Exception ex)
         {
@@ -112,7 +153,7 @@ public partial class TelaListaCurso : ContentPage
         }
         finally
         {
-            lstCurso.IsRefreshing = false;
+            refreshView.IsRefreshing = false;
         }
     }
 }

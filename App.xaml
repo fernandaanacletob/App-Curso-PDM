@@ -9,6 +9,49 @@
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <!-- Cores Corporativas Profissionais -->
+
+            <!-- Cores Primárias -->
+            <Color x:Key="PrimaryColor">#0D6EFD</Color>
+            <Color x:Key="PrimaryDark">#0B5ED7</Color>
+            <Color x:Key="PrimaryLight">#E7F1FF</Color>
+
+            <!-- Cores Secundárias -->
+            <Color x:Key="SecondaryColor">#6C757D</Color>
+            <Color x:Key="SecondaryDark">#5A6268</Color>
+            <Color x:Key="SecondaryLight">#E9ECEF</Color>
+
+            <!-- Cores de Status -->
+            <Color x:Key="SuccessColor">#198754</Color>
+            <Color x:Key="DangerColor">#DC3545</Color>
+            <Color x:Key="WarningColor">#FFC107</Color>
+            <Color x:Key="InfoColor">#0DCAF0</Color>
+
+            <!-- Cores Neutras -->
+            <Color x:Key="WhiteColor">#FFFFFF</Color>
+            <Color x:Key="LightColor">#F8F9FA</Color>
+            <Color x:Key="GrayColor">#6C757D</Color>
+            <Color x:Key="GrayLight">#DEE2E6</Color>
+            <Color x:Key="DarkColor">#212529</Color>
+            <Color x:Key="BlackColor">#000000</Color>
+
+            <!-- Cores de Fundo -->
+            <Color x:Key="BackgroundColor">#F8F9FA</Color>
+            <Color x:Key="SurfaceColor">#FFFFFF</Color>
+
+            <!-- Cores de Texto -->
+            <Color x:Key="TextPrimary">#212529</Color>
+            <Color x:Key="TextSecondary">#6C757D</Color>
+            <Color x:Key="TextDisabled">#ADB5BD</Color>
+
+            <!-- Cores de Bordas -->
+            <Color x:Key="BorderColor">#DEE2E6</Color>
+            <Color x:Key="BorderFocus">#0D6EFD</Color>
+
+            <!-- Cores de Sombra -->
+            <Color x:Key="ShadowColor">#00000014</Color>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>
