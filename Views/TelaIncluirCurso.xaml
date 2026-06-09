@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="appProvaA1Curso.Views.TelaIncluirCurso"
-             Title="TelaIncluirCurso">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+x:Class="appProvaA1Curso.Views.TelaIncluirCurso"
+BackgroundImageSource="fundocurso.png"
+Title="Incluir Curso">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Salvar" IconImageSource="salvarcurso.png" Clicked="ToolbarItemClickedSalvar" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout>
+            <Border Stroke="#30f1b7" Padding="10,5" Margin="4" StrokeShape="RoundRectangle 8,0">
+                <Entry Placeholder="Nome:" x:Name="txtNomeCurso" FontAttributes="Bold" Margin="4" ClearButtonVisibility="WhileEditing" />
+            </Border>
+            <Border Stroke="#30f1b7" Padding="10,5" Margin="4" StrokeShape="RoundRectangle 8,0">
+                <Entry Placeholder="Endereço:" x:Name="txtEnderecoCurso" FontAttributes="Bold" Margin="4" ClearButtonVisibility="WhileEditing" />
+            </Border>
+        </StackLayout>
+    </ContentPage.Content>
 </ContentPage>

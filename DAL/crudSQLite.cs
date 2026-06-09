@@ -36,7 +36,7 @@ namespace appProvaA1Curso.DAL {
 
         public Task<List<Curso>> Search(string buscaCurso)
         {
-            string sql = "SELECT * FROM Curso WHER cursoNome LIKE '%" + buscaCurso + "%'";
+            string sql = "SELECT * FROM Curso WHERE cursoNome LIKE '%" + buscaCurso + "%'";
 
             return _conexao.QueryAsync<Curso>(sql);
         }

@@ -1,4 +1,3 @@
-using appProvaA1Curso;
 using appProvaA1Curso.Model;
 using System.Collections.ObjectModel;
 
